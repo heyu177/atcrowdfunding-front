@@ -4,7 +4,7 @@
       <b-navbar-brand href="#" style="font-size:1.5rem; color:#9d9d89">尚筹网-创意产品众筹平台</b-navbar-brand>
     </b-navbar>
     <b-container style="padding:5% 20%">
-      <b-form @submit="submit">
+      <b-form @submit.prevent="submit">
         <b-form-group>
           <h2>
             <b-icon icon="person-fill"></b-icon>用户登录
@@ -72,9 +72,10 @@ export default {
     };
   },
   methods:{
-    submit(event){
-      event.preventDefault();
-      login({});
+    submit(){
+      login({}).then((response) => {
+        console.log(response);
+      });
     }
   }
 };
