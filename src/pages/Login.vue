@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login_main">
     <b-navbar type="dark" variant="dark" style="padding:0.5rem 3rem">
       <b-navbar-brand href="#" style="font-size:1.5rem; color:#9d9d89">尚筹网-创意产品众筹平台</b-navbar-brand>
     </b-navbar>
@@ -95,7 +95,10 @@ export default {
   },
   methods: {
     submit() {
-      login({}).then(response => {
+      login({
+        account:this.account,
+        userpassword:this.password
+      }).then(response => {
         console.log(response);
       });
     },
@@ -126,4 +129,8 @@ export default {
 </script>
 
 <style>
+.login_main{
+  height: 100%;
+  background: #eee;
+}
 </style>
