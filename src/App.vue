@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app_main">
     <Login/>
   </div>
 </template>
@@ -15,5 +15,7 @@ export default {
 </script>
 
 <style>
-
+.app_main{
+  height: 100%;
+}
 </style>

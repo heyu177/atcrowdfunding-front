@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login_main">
     <b-navbar type="dark" variant="dark" style="padding:0.5rem 3rem">
       <b-navbar-brand href="#" style="font-size:1.5rem; color:#9d9d89">尚筹网-创意产品众筹平台</b-navbar-brand>
     </b-navbar>
@@ -9,6 +9,9 @@
           <h2>
             <b-icon icon="person-fill"></b-icon>用户登录
           </h2>
+        </b-form-group>
+        <b-form-group>
+          <h4 v-if="error" class="error">账号或密码不正确</h4>
         </b-form-group>
         <b-form-group>
           <b-input-group>
@@ -90,13 +93,22 @@ export default {
         { text: "会员", value: "member" },
         { text: "管理", value: "user" }
       ],
-      isfocus: { accountFocus: false, passwordFocus: false }
+      isfocus: { accountFocus: false, passwordFocus: false },
+      error:false
     };
   },
   methods: {
     submit() {
-      login({}).then(response => {
-        console.log(response);
+      login({
+        account:this.account,
+        userpassword:this.password
+      }).then(response => {
+        if (response.data=="fail") {
+          this.error=true;
+        }else{
+          // 登录成功
+          this.error=false;
+        }
       });
     },
     focus(type){
@@ -126,4 +138,11 @@ export default {
 </script>
 
 <style>
+.login_main{
+  height: 100%;
+  background: #eee;
+}
+.error{
+  color: red;
+}
 </style>
