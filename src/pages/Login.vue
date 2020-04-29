@@ -11,6 +11,9 @@
           </h2>
         </b-form-group>
         <b-form-group>
+          <h4 v-if="error" class="error">账号或密码不正确</h4>
+        </b-form-group>
+        <b-form-group>
           <b-input-group>
             <b-form-input
               required
@@ -90,7 +93,8 @@ export default {
         { text: "会员", value: "member" },
         { text: "管理", value: "user" }
       ],
-      isfocus: { accountFocus: false, passwordFocus: false }
+      isfocus: { accountFocus: false, passwordFocus: false },
+      error:false
     };
   },
   methods: {
@@ -99,7 +103,12 @@ export default {
         account:this.account,
         userpassword:this.password
       }).then(response => {
-        console.log(response);
+        if (response.data=="fail") {
+          this.error=true;
+        }else{
+          // 登录成功
+          this.error=false;
+        }
       });
     },
     focus(type){
@@ -132,5 +141,8 @@ export default {
 .login_main{
   height: 100%;
   background: #eee;
+}
+.error{
+  color: red;
 }
 </style>
