@@ -11,9 +11,6 @@
           </h2>
         </b-form-group>
         <b-form-group>
-          <h4 v-if="error" class="error">账号或密码不正确</h4>
-        </b-form-group>
-        <b-form-group>
           <b-input-group>
             <b-form-input
               required
@@ -93,56 +90,61 @@ export default {
         { text: "会员", value: "member" },
         { text: "管理", value: "user" }
       ],
-      isfocus: { accountFocus: false, passwordFocus: false },
-      error:false
+      isfocus: { accountFocus: false, passwordFocus: false }
     };
   },
   methods: {
     submit() {
+      const layerid = this.$layer.loading({ content: "正在登陆中..." });
       login({
-        account:this.account,
-        userpassword:this.password
+        account: this.account,
+        userpassword: this.password
       }).then(response => {
-        if (response.data=="fail") {
-          this.error=true;
-        }else{
+        this.$layer.close(layerid);
+        if (response.data == "fail") {
+          // 登陆失败
+          this.$layer.msg("用户名或密码错误！", { time: 3 });
+        } else {
           // 登录成功
-          this.error=false;
+          this.error = false;
+          this.$router.push("/main");
         }
       });
     },
-    focus(type){
-      if (type=="account") {
-        this.isfocus.accountFocus=true;
-      }else if (type=="password") {
-        this.isfocus.passwordFocus=true;
+    focus(type) {
+      if (type == "account") {
+        this.isfocus.accountFocus = true;
+      } else if (type == "password") {
+        this.isfocus.passwordFocus = true;
       }
     },
-    blur(type){
-      if (type=="account") {
-        this.isfocus.accountFocus=false;
-      }else if (type=="password") {
-        this.isfocus.passwordFocus=false;
-      }
+    blur(type) {
+      setTimeout(() => {
+        if (type == "account") {
+          this.isfocus.accountFocus = false;
+        } else if (type == "password") {
+          this.isfocus.passwordFocus = false;
+        }
+      }, 500);
     }
   },
   computed: {
     validateAccount() {
-      return this.isfocus.accountFocus ?  this.account != "" : null;
+      return this.isfocus.accountFocus ? this.account != "" : null;
     },
     validatePassword() {
-      return this.isfocus.passwordFocus ? this.password != "": null;
+      return this.isfocus.passwordFocus ? this.password != "" : null;
     }
   }
 };
 </script>
 
 <style>
-.login_main{
+.login_main {
   height: 100%;
   background: #eee;
 }
-.error{
+.error {
   color: red;
 }
 </style>

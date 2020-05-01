@@ -9,12 +9,12 @@
         <b-button-group class="m-2">
           <b-dropdown variant="success">
             <template v-slot:button-content>
-              <b-icon icon="person-fill"></b-icon>张三
+              <b-icon icon="person-fill"></b-icon>{{username}}
             </template>
             <b-dropdown-item>个人设置</b-dropdown-item>
             <b-dropdown-item>消息</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item>退出系统</b-dropdown-item>
+            <b-dropdown-item @click="logout">退出系统</b-dropdown-item>
           </b-dropdown>
         </b-button-group>
         <b-button class="m-2" variant="danger">
@@ -31,22 +31,22 @@
           <h1 class="title">控制面板</h1>
           <b-row>
             <b-col sm="6" lg="3" style="text-align:center">
-              <b-img rounded="circle" blank="true" blank-color="#0d8fdb" alt="200x200" width="200" height="200"></b-img>
+              <b-img rounded="circle" data-src="holder.js/200x200?theme=sky"></b-img>
               <h4>Label</h4>
               <span>Something else</span>
             </b-col>
             <b-col sm="6" lg="3" style="text-align:center">
-              <b-img rounded="circle" blank="true" blank-color="#39dbac" alt="200x200" width="200" height="200"></b-img>
+              <b-img rounded="circle" data-src="holder.js/200x200?theme=vine"></b-img>
               <h4>Label</h4>
               <span>Something else</span>
             </b-col>
             <b-col sm="6" lg="3" style="text-align:center">
-              <b-img rounded="circle" blank="true" blank-color="#0d8fdb" alt="200x200" width="200" height="200"></b-img>
+              <b-img rounded="circle" data-src="holder.js/200x200?theme=sky"></b-img>
               <h4>Label</h4>
               <span>Something else</span>
             </b-col>
             <b-col sm="6" lg="3" style="text-align:center">
-              <b-img rounded="circle" blank="true" blank-color="#39dbac" alt="200x200" width="200" height="200"></b-img>
+              <b-img rounded="circle" data-src="holder.js/200x200?theme=vine"></b-img>
               <h4>Label</h4>
               <span>Something else</span>
             </b-col>
@@ -59,6 +59,8 @@
 
 <script>
 import Vue from "vue";
+import "holder/holder.js"
+import {getUsername,doLogout} from "../ajax/ajax.js"
 import {
   NavPlugin,
   NavbarPlugin,
@@ -77,7 +79,29 @@ Vue.use(ButtonGroupPlugin);
 Vue.use(LayoutPlugin);
 Vue.use(ImagePlugin);
 
-export default {};
+export default {
+  data(){
+    return{
+      username:""
+    }
+  },
+  methods:{
+    logout(){
+      doLogout().then(response => {
+        if (response.data=="success") {
+          this.$router.push("/");
+        }
+      });
+    }
+  },
+  mounted(){
+    getUsername().then(response => {
+      if (response.data.result=="success") {
+        this.username=response.data.username;
+      }
+    });
+  }
+};
 </script>
 
 <style>
