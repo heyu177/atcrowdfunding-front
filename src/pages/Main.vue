@@ -25,7 +25,7 @@
     <b-container fluid>
       <b-row>
         <b-col sm="3" md="2">
-          <div style="background:#f5f5f5;height:100%"></div>
+          <Menu/>
         </b-col>
         <b-col sm="9" md="10">
           <h1 class="title">控制面板</h1>
@@ -60,6 +60,7 @@
 <script>
 import Vue from "vue";
 import "holder/holder.js"
+import Menu from "../components/menu.vue"
 import {getUsername,doLogout} from "../ajax/ajax.js"
 import {
   NavPlugin,
@@ -84,6 +85,9 @@ export default {
     return{
       username:""
     }
+  },
+  components:{
+    Menu
   },
   methods:{
     logout(){
