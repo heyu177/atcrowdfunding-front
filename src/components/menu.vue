@@ -2,7 +2,7 @@
   <div>
       <b-card no-body>
           <b-card-header>
-              <b-icon icon="clock-history" variant="primary"></b-icon> <b-link to="/main">控制面板</b-link>
+              <b-icon icon="clock-history" variant="primary"></b-icon> <b-link to="/main/control">控制面板</b-link>
           </b-card-header>
       </b-card>
       <b-card no-body>
@@ -13,7 +13,7 @@
           <b-collapse id="accordion-1">
               <b-card-body>
                   <b-nav vertical style="font-size:0.8rem">
-                      <b-nav-item><b-icon icon="person-fill"></b-icon>用户维护</b-nav-item>
+                      <b-nav-item to="/main/user"><b-icon icon="person-fill"></b-icon>用户维护</b-nav-item>
                       <b-nav-item><b-icon icon="person-bounding-box"></b-icon>角色维护</b-nav-item>
                       <b-nav-item><b-icon icon="lock-fill"></b-icon>权限维护</b-nav-item>
                   </b-nav>

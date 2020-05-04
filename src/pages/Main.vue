@@ -28,29 +28,7 @@
           <Menu/>
         </b-col>
         <b-col sm="9" md="10">
-          <h1 class="title">控制面板</h1>
-          <b-row>
-            <b-col sm="6" lg="3" style="text-align:center">
-              <b-img rounded="circle" data-src="holder.js/200x200?theme=sky"></b-img>
-              <h4>Label</h4>
-              <span>Something else</span>
-            </b-col>
-            <b-col sm="6" lg="3" style="text-align:center">
-              <b-img rounded="circle" data-src="holder.js/200x200?theme=vine"></b-img>
-              <h4>Label</h4>
-              <span>Something else</span>
-            </b-col>
-            <b-col sm="6" lg="3" style="text-align:center">
-              <b-img rounded="circle" data-src="holder.js/200x200?theme=sky"></b-img>
-              <h4>Label</h4>
-              <span>Something else</span>
-            </b-col>
-            <b-col sm="6" lg="3" style="text-align:center">
-              <b-img rounded="circle" data-src="holder.js/200x200?theme=vine"></b-img>
-              <h4>Label</h4>
-              <span>Something else</span>
-            </b-col>
-          </b-row>
+          <router-view></router-view>
         </b-col>
       </b-row>
     </b-container>
@@ -59,8 +37,7 @@
 
 <script>
 import Vue from "vue";
-import "holder/holder.js"
-import Menu from "../components/menu.vue"
+import Menu from "../components/Menu.vue"
 import {getUsername,doLogout} from "../ajax/ajax.js"
 import {
   NavPlugin,
