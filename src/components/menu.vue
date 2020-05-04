@@ -8,7 +8,7 @@
       <b-card no-body>
           <b-card-header v-b-toggle.accordion-1 style="cursor:pointer">
               <b-icon icon="card-heading" variant="dark"></b-icon> <b-link style="color:#000;text-decoration:none">权限管理</b-link>
-              <b-badge class="ml-5" style="float:right" pill>3</b-badge>
+              <b-badge style="float:right" pill>3</b-badge>
           </b-card-header>
           <b-collapse id="accordion-1">
               <b-card-body>
@@ -23,7 +23,7 @@
       <b-card no-body>
           <b-card-header v-b-toggle.accordion-2 style="cursor:pointer">
               <b-icon icon="check" variant="dark"></b-icon> <b-link style="color:#000;text-decoration:none">业务审核</b-link>
-              <b-badge class="ml-5" style="float:right" pill>3</b-badge>
+              <b-badge style="float:right" pill>3</b-badge>
           </b-card-header>
           <b-collapse id="accordion-2">
               <b-card-body>
@@ -38,7 +38,7 @@
       <b-card no-body>
           <b-card-header v-b-toggle.accordion-3 style="cursor:pointer">
               <b-icon icon="grid1x2-fill" variant="dark"></b-icon> <b-link style="color:#000;text-decoration:none">业务管理</b-link>
-              <b-badge class="ml-5" style="float:right" pill>7</b-badge>
+              <b-badge style="float:right" pill>7</b-badge>
           </b-card-header>
           <b-collapse id="accordion-3">
               <b-card-body>
