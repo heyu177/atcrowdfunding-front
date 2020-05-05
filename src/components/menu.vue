@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-3">
       <b-card no-body>
           <b-card-header>
               <b-icon icon="clock-history" variant="primary"></b-icon> <b-link to="/main/control">控制面板</b-link>

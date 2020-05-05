@@ -1,5 +1,5 @@
 <template>
-  <div ref="root">
+  <div>
     <h1 class="title">控制面板</h1>
     <b-row>
       <b-col sm="6" lg="3" style="text-align:center">

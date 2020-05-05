@@ -22,7 +22,9 @@
                       <b-form-checkbox></b-form-checkbox>
                   </template>
                   <template v-slot:cell(action)>
-                      <b-button><b-icon icon="check-box"></b-icon></b-button>
+                      <b-button variant="success" class="mr-1"><b-icon icon="check-box"></b-icon></b-button>
+                      <b-button variant="primary" class="mr-1"><b-icon icon="brush"></b-icon></b-button>
+                      <b-button variant="danger"><b-icon icon="x-square"></b-icon></b-button>
                   </template>
               </b-table>
           </b-card-body>
@@ -70,7 +72,18 @@ export default {
                 }
             ],
             items:[
-                {id:1,account:"dsafsa",name:"sfsfs",email:"efasfafsf"}
+                {id:1,account:"dsafsa",name:"sfsfs",email:"efasfafsf"},
+                {id:2,account:"dsafsa",name:"sfsfs",email:"efasfafsf"},
+                {id:3,account:"dsafsa",name:"sfsfs",email:"efasfafsf"},
+                {id:4,account:"dsafsa",name:"sfsfs",email:"efasfafsf"},
+                {id:5,account:"dsafsa",name:"sfsfs",email:"efasfafsf"},
+                {id:6,account:"dsafsa",name:"sfsfs",email:"efasfafsf"},
+                {id:7,account:"dsafsa",name:"sfsfs",email:"efasfafsf"},
+                {id:8,account:"dsafsa",name:"sfsfs",email:"efasfafsf"},
+                {id:9,account:"dsafsa",name:"sfsfs",email:"efasfafsf"},
+                {id:10,account:"dsafsa",name:"sfsfs",email:"efasfafsf"},
+                {id:11,account:"dsafsa",name:"sfsfs",email:"efasfafsf"},
+                {id:12,account:"dsafsa",name:"sfsfs",email:"efasfafsf"}
             ]
         }
     }
