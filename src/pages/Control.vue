@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="root">
     <h1 class="title">控制面板</h1>
     <b-row>
       <b-col sm="6" lg="3" style="text-align:center">
@@ -27,13 +27,14 @@
 </template>
 
 <script>
-import "holder/holder.js"
 import Vue from "vue";
+import "holder/holder.js"
 import { LayoutPlugin } from "bootstrap-vue";
 
 Vue.use(LayoutPlugin);
 
 export default {
+  
 };
 </script>
 
