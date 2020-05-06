@@ -124,13 +124,14 @@ export default {
   },
   methods: {
     changePage(page) {
+      const layerid=this.$layer.loading({content:"正在查询"})
       getUsers({
         pagenum: page,
         pagesize: this.perPage
       }).then(response => {
-        console.log(response)
         this.items = response.data.data;
         this.rows = response.data.total;
+        this.$layer.close(layerid);
       });
     }
   }
