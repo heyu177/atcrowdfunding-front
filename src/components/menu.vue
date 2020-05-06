@@ -73,7 +73,6 @@ Vue.use(BadgePlugin);
 Vue.use(NavPlugin);
 
 export default {
-
 }
 </script>
 
