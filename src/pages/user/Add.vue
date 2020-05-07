@@ -2,18 +2,18 @@
   <div>
       <b-breadcrumb :items="items" class="m-3"></b-breadcrumb>
       <b-card header="表单数据" class="m-3">
-          <b-form>
+          <b-form @submit.prevent="add">
               <b-form-group label="登录账号" label-for="account" label-class="input_label">
-                  <b-form-input id="account" required placeholder="请输入登录账号"></b-form-input>
+                  <b-form-input v-model="account" id="account" required placeholder="请输入登录账号" oninvalid="setCustomValidity('账号不能为空')" oninput="setCustomValidity('')"></b-form-input>
               </b-form-group>
               <b-form-group label="用户名称" label-for="username" label-class="input_label">
-                  <b-form-input id="username" required placeholder="请输入用户名称"></b-form-input>
+                  <b-form-input v-model="username" id="username" required placeholder="请输入用户名称" oninvalid="setCustomValidity('用户名不能为空')" oninput="setCustomValidity('')"></b-form-input>
               </b-form-group>
               <b-form-group label="邮箱地址" label-for="email" label-class="input_label">
-                  <b-form-input id="email" type="email" required placeholder="请输入邮箱地址"></b-form-input>
+                  <b-form-input v-model="email" id="email" type="email" required placeholder="请输入邮箱地址"></b-form-input>
               </b-form-group>
-              <b-button variant="success" class="mr-1"><b-icon icon="plus"></b-icon>新增</b-button>
-              <b-button variant="danger"><b-icon icon="arrow-repeat"></b-icon>重置</b-button>
+              <b-button type="submit" variant="success" class="mr-1"><b-icon icon="plus"></b-icon>新增</b-button>
+              <b-button type="reset" variant="danger"><b-icon icon="arrow-repeat"></b-icon>重置</b-button>
           </b-form>
       </b-card>
   </div>
@@ -21,6 +21,7 @@
 
 <script>
 import Vue from "vue"
+import {addUser} from "../../ajax/ajax.js"
 import {BadgePlugin,CardPlugin,FormPlugin,ButtonPlugin} from "bootstrap-vue"
 
 Vue.use(BadgePlugin);
@@ -31,6 +32,9 @@ Vue.use(ButtonPlugin);
 export default {
     data(){
         return{
+            account:"",
+            username:"",
+            email:"",
             items:[
                 {
                     text:"首页",
@@ -45,6 +49,23 @@ export default {
                     active:true
                 }
             ]
+        }
+    },
+    methods:{
+        add(){
+            const layerid=this.$layer.loading({content:"正在添加"});
+            addUser({
+                account:this.account,
+                username:this.username,
+                email:this.email
+            }).then(response => {
+                this.$layer.close(layerid);
+                if (response.data=="success") {
+                    this.$router.push("/main/user");
+                }else{
+                    this.$layer.msg("新增失败！",{time:3});
+                }
+            });
         }
     }
 }

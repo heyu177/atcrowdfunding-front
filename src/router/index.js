@@ -9,7 +9,6 @@ import Add from "../pages/user/Add.vue"
 Vue.use(VueRouter);
 
 export default new VueRouter({
-    mode:"history",
     routes: [
         {
             path: "/",
