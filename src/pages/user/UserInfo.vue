@@ -5,9 +5,9 @@
         <b-icon icon="grid3x3-gap"></b-icon>数据列表
       </b-card-header>
       <b-card-body>
-        <b-form inline style="float:left">
+        <b-form inline style="float:left" @submit.prevent="getUsersByAccount">
           <b-input-group prepend="查询条件">
-            <b-form-input placeholder="请输入查询条件" class="mr-1"></b-form-input>
+            <b-form-input placeholder="请输入账号" class="mr-1" v-model="account"></b-form-input>
           </b-input-group>
           <b-button type="submit" style="background:#f0ad4e">
             <b-icon icon="search"></b-icon>查询
@@ -16,7 +16,7 @@
         <b-button variant="danger" style="float:right">
           <b-icon icon="x-circle"></b-icon>删除
         </b-button>
-        <b-button variant="primary" style="float:right;margin:0 1rem">
+        <b-button variant="primary" @click="$router.push('/main/user/add')" style="float:right;margin:0 1rem">
           <b-icon icon="plus-circle"></b-icon>新增
         </b-button>
         <hr class="line" />
@@ -87,6 +87,8 @@ export default {
       perPage: 2,
       // 记录总数
       rows: 0,
+      // 搜索框内的账号
+      account:"",
       fields: [
         {
           key: "id",
@@ -127,7 +129,18 @@ export default {
       const layerid=this.$layer.loading({content:"正在查询"})
       getUsers({
         pagenum: page,
-        pagesize: this.perPage
+        pagesize: this.perPage,
+        account:this.account
+      }).then(response => {
+        this.items = response.data.data;
+        this.rows = response.data.total;
+        this.$layer.close(layerid);
+      });
+    },
+    getUsersByAccount(){
+      const layerid=this.$layer.loading({content:"正在查询"})
+      getUsers({
+        account:this.account
       }).then(response => {
         this.items = response.data.data;
         this.rows = response.data.total;
