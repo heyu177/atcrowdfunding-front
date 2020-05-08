@@ -16,7 +16,11 @@
         <b-button variant="danger" style="float:right">
           <b-icon icon="x-circle"></b-icon>删除
         </b-button>
-        <b-button variant="primary" @click="$router.push('/main/user/add')" style="float:right;margin:0 1rem">
+        <b-button
+          variant="primary"
+          @click="$router.push('/main/user/addOrEdit')"
+          style="float:right;margin:0 1rem"
+        >
           <b-icon icon="plus-circle"></b-icon>新增
         </b-button>
         <hr class="line" />
@@ -27,11 +31,11 @@
           <template v-slot:head(check)>
             <b-form-checkbox></b-form-checkbox>
           </template>
-          <template v-slot:cell(action)>
+          <template v-slot:cell(action)="scope">
             <b-button variant="success" class="mr-1" size="sm">
               <b-icon icon="check-box"></b-icon>
             </b-button>
-            <b-button variant="primary" class="mr-1" size="sm">
+            <b-button variant="primary" @click="editUser(scope.item)" class="mr-1" size="sm">
               <b-icon icon="brush"></b-icon>
             </b-button>
             <b-button variant="danger" size="sm">
@@ -88,7 +92,7 @@ export default {
       // 记录总数
       rows: 0,
       // 搜索框内的账号
-      account:"",
+      account: "",
       fields: [
         {
           key: "id",
@@ -120,32 +124,52 @@ export default {
   },
   mounted() {
     getUsers().then(response => {
-      this.items = response.data.data;
+      const data = response.data.data;
+      this.changeId(data);
+      this.items = data;
       this.rows = response.data.total;
     });
   },
   methods: {
     changePage(page) {
-      const layerid=this.$layer.loading({content:"正在查询"})
+      const layerid = this.$layer.loading({ content: "正在查询" });
       getUsers({
         pagenum: page,
         pagesize: this.perPage,
-        account:this.account
+        account: this.account
+      }).then(response => {
+        const data = response.data.data;
+        this.changeId(data);
+        this.items = data;
+        this.rows = response.data.total;
+        this.$layer.close(layerid);
+      });
+    },
+    getUsersByAccount() {
+      const layerid = this.$layer.loading({ content: "正在查询" });
+      getUsers({
+        account: this.account
       }).then(response => {
         this.items = response.data.data;
         this.rows = response.data.total;
         this.$layer.close(layerid);
       });
     },
-    getUsersByAccount(){
-      const layerid=this.$layer.loading({content:"正在查询"})
-      getUsers({
-        account:this.account
-      }).then(response => {
-        this.items = response.data.data;
-        this.rows = response.data.total;
-        this.$layer.close(layerid);
-      });
+    // 改变用户id的值
+    changeId(data) {
+      for (let index = 0; index < data.length; index++) {
+        data[index].id = (this.currentPage-1)*this.perPage+index+1;
+      }
+    },
+    editUser(user){
+      this.$router.push({
+        path:"/main/user/addOrEdit",
+        query:{
+          account:user.account,
+          username:user.username,
+          email:user.email
+        }
+      })
     }
   }
 };

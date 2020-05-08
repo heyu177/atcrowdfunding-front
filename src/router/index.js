@@ -4,7 +4,7 @@ import Login from "../pages/Login.vue"
 import Main from "../pages/Main.vue"
 import UserInfo from "../pages/user/UserInfo.vue"
 import Control from "../pages/Control.vue"
-import Add from "../pages/user/Add.vue"
+import AddOrEdit from "../pages/user/AddOrEdit.vue"
 
 Vue.use(VueRouter);
 
@@ -28,8 +28,8 @@ export default new VueRouter({
                     component:UserInfo,
                 },
                 {
-                    path:"user/add",
-                    component:Add
+                    path:"user/addOrEdit",
+                    component:AddOrEdit
                 }
             ]
         }

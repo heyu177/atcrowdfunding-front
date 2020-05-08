@@ -61,12 +61,19 @@ export default {
             }).then(response => {
                 this.$layer.close(layerid);
                 if (response.data=="success") {
+                    this.$layer.msg("新增成功",{time:3});
                     this.$router.push("/main/user");
                 }else{
                     this.$layer.msg("新增失败！",{time:3});
                 }
             });
         }
+    },
+    mounted(){
+        const user=this.$route.query;
+        this.account=user.account;
+        this.username=user.username;
+        this.email=user.email;
     }
 }
 </script>
