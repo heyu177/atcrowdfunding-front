@@ -19,4 +19,10 @@ export const doLogout= () => axios.post(`${baseUrl}/doLogout`);
 export const getUsers= params => axios.get(`${baseUrl}/user/index`,{params});
 
 // 新增用户
-export const addUser= params => axios.post(`${baseUrl}/user/insert`,params); 
+export const addUser= params => axios.post(`${baseUrl}/user/insert`,params);
+
+// 修改用户
+export const editUser= params => axios.put(`${baseUrl}/user/update`,params);
+
+// 删除用户
+export const deleteUser= params => axios.delete(`${baseUrl}/user/delete`,{params});

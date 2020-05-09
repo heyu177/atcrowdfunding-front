@@ -24,12 +24,12 @@
           <b-icon icon="plus-circle"></b-icon>新增
         </b-button>
         <hr class="line" />
-        <b-table :fields="fields" :items="items" primary-key="id" striped hover bordered>
-          <template v-slot:cell(check)>
-            <b-form-checkbox></b-form-checkbox>
+        <b-table :fields="fields" :items="items" primary-key="index" striped hover bordered>
+          <template v-slot:cell(check)="scope">
+            <b-form-checkbox v-model="checked[scope.item.index-1]"></b-form-checkbox>
           </template>
           <template v-slot:head(check)>
-            <b-form-checkbox></b-form-checkbox>
+            <b-form-checkbox @change="changeHeadCheckbox"></b-form-checkbox>
           </template>
           <template v-slot:cell(action)="scope">
             <b-button variant="success" class="mr-1" size="sm">
@@ -38,7 +38,7 @@
             <b-button variant="primary" @click="editUser(scope.item)" class="mr-1" size="sm">
               <b-icon icon="brush"></b-icon>
             </b-button>
-            <b-button variant="danger" size="sm">
+            <b-button variant="danger" size="sm" @click="removeUser(scope.item)">
               <b-icon icon="x-square"></b-icon>
             </b-button>
           </template>
@@ -66,7 +66,7 @@
 
 <script>
 import Vue from "vue";
-import { getUsers } from "../../ajax/ajax.js";
+import { getUsers, deleteUser } from "../../ajax/ajax.js";
 import {
   CardPlugin,
   TablePlugin,
@@ -95,7 +95,7 @@ export default {
       account: "",
       fields: [
         {
-          key: "id",
+          key: "index",
           label: "#"
         },
         {
@@ -119,13 +119,17 @@ export default {
           label: "操作"
         }
       ],
-      items: []
+      items: [],
+      newItems: [],
+      // 复选框的状态
+      checked:[]
     };
   },
   mounted() {
     getUsers().then(response => {
       const data = response.data.data;
       this.changeId(data);
+      this.newItems = data;
       this.items = data;
       this.rows = response.data.total;
     });
@@ -158,18 +162,51 @@ export default {
     // 改变用户id的值
     changeId(data) {
       for (let index = 0; index < data.length; index++) {
-        data[index].id = (this.currentPage-1)*this.perPage+index+1;
+        data[index].index = (this.currentPage - 1) * this.perPage + index + 1;
       }
     },
-    editUser(user){
+    editUser(user) {
       this.$router.push({
-        path:"/main/user/addOrEdit",
-        query:{
-          account:user.account,
-          username:user.username,
-          email:user.email
+        path: "/main/user/addOrEdit",
+        query: {
+          id: user.id,
+          account: user.account,
+          username: user.username,
+          email: user.email
         }
-      })
+      });
+    },
+    removeUser(user) {
+      this.$layer.confirm(
+        `确实要删除用户信息【${user.username}】吗？`,
+        { title: "提示" },
+        layerid => {
+          deleteUser({ id: user.id }).then(response => {
+            if (response.data.result == "success") {
+              this.$layer.close(layerid);
+              this.$layer.msg(`删除${response.data.data}条用户信息`, {
+                time: 3
+              });
+              this.newItems.splice(user.index - 1, 1);
+              this.items = this.newItems;
+            } else if (response.data.result == "fail") {
+              this.$layer.close(layerid);
+              this.$layer.msg("删除失败！", { time: 3 });
+            }
+          });
+        }
+      );
+    },
+    changeHeadCheckbox(checked){
+      if (checked) {
+        for (let index = 0; index < this.items.length; index++) {
+          this.checked[index]=true;
+        }
+      }else{
+        for (let index = 0; index < this.items.length; index++) {
+          this.checked[index]=false;
+        }
+      }
     }
   }
 };
