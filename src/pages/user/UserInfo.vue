@@ -13,7 +13,7 @@
             <b-icon icon="search"></b-icon>查询
           </b-button>
         </b-form>
-        <b-button variant="danger" style="float:right">
+        <b-button variant="danger" @click="removeUsers" style="float:right">
           <b-icon icon="x-circle"></b-icon>删除
         </b-button>
         <b-button
@@ -26,7 +26,7 @@
         <hr class="line" />
         <b-table :fields="fields" :items="items" primary-key="index" striped hover bordered>
           <template v-slot:cell(check)="scope">
-            <b-form-checkbox v-model="checked[scope.item.index-1]"></b-form-checkbox>
+            <b-form-checkbox v-model="checked[scope.item.index-1]" :value="scope.item.id"></b-form-checkbox>
           </template>
           <template v-slot:head(check)>
             <b-form-checkbox @change="changeHeadCheckbox"></b-form-checkbox>
@@ -198,15 +198,21 @@ export default {
       );
     },
     changeHeadCheckbox(checked){
+      const newChecked=[];
       if (checked) {
         for (let index = 0; index < this.items.length; index++) {
-          this.checked[index]=true;
+          newChecked[index]=this.items[index].id;
         }
+        this.checked=newChecked;
       }else{
         for (let index = 0; index < this.items.length; index++) {
-          this.checked[index]=false;
+          newChecked[index]=false;
         }
+        this.checked=newChecked;
       }
+    },
+    removeUsers(){
+      
     }
   }
 };
