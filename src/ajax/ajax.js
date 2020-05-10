@@ -24,5 +24,8 @@ export const addUser= params => axios.post(`${baseUrl}/user/insert`,params);
 // 修改用户
 export const editUser= params => axios.put(`${baseUrl}/user/update`,params);
 
-// 删除用户
+// 删除一个用户
 export const deleteUser= params => axios.delete(`${baseUrl}/user/delete`,{params});
+
+// 删除多个用户
+export const deleteUsers= params => axios.delete(`${baseUrl}/user/deletes`,{params});

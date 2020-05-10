@@ -66,7 +66,7 @@
 
 <script>
 import Vue from "vue";
-import { getUsers, deleteUser } from "../../ajax/ajax.js";
+import { getUsers, deleteUser,deleteUsers } from "../../ajax/ajax.js";
 import {
   CardPlugin,
   TablePlugin,
@@ -88,7 +88,7 @@ export default {
     return {
       currentPage: 1,
       // 一页显示几行数据
-      perPage: 2,
+      perPage: 5,
       // 记录总数
       rows: 0,
       // 搜索框内的账号
@@ -122,11 +122,14 @@ export default {
       items: [],
       newItems: [],
       // 复选框的状态
-      checked:[]
+      checked: []
     };
   },
   mounted() {
-    getUsers().then(response => {
+    getUsers({
+      pagenum:1,
+      pagesize:this.perPage
+    }).then(response => {
       const data = response.data.data;
       this.changeId(data);
       this.newItems = data;
@@ -197,25 +200,54 @@ export default {
         }
       );
     },
-    changeHeadCheckbox(checked){
-      const newChecked=[];
+    changeHeadCheckbox(checked) {
+      const newChecked = [];
       if (checked) {
         for (let index = 0; index < this.items.length; index++) {
-          newChecked[index]=this.items[index].id;
+          newChecked[index] = this.items[index].id;
         }
-        this.checked=newChecked;
-      }else{
+        this.checked = newChecked;
+      } else {
         for (let index = 0; index < this.items.length; index++) {
-          newChecked[index]=false;
+          newChecked[index] = false;
         }
-        this.checked=newChecked;
+        this.checked = newChecked;
       }
     },
-    removeUsers(){
-      
+    removeUsers() {
+      if (this.checked.length == 0) {
+        this.$layer.msg("请勾选用户信息的复选框", { time: 3 });
+        return;
+      }
+      const checkedIds=[];
+      for (let index = 0; index < this.checked.length; index++) {
+        if (this.checked[index] != false && this.checked[index]!= undefined) {
+          checkedIds.push(this.checked[index]);
+      }
+      if (checkedIds.length==0) {
+        this.$layer.msg("请勾选用户信息的复选框", { time: 3 });
+        return;
+      }
+      this.$layer.confirm("确实要删除所选的用户信息吗？",{title:"提示"},layerid => {
+        deleteUsers({ids:checkedIds}).then(response => {
+          if (response.data.result == "success") {
+              this.$layer.close(layerid);
+              this.$layer.msg(`删除${response.data.data}条用户信息`, {
+                time: 3
+              });
+              for (let index = 0; index < this.checked.length; index++) {
+                this.newItems.splice(this.checked[index].index-1,1);
+              }
+              this.items = this.newItems;
+            } else if (response.data.result == "fail") {
+              this.$layer.close(layerid);
+              this.$layer.msg("删除失败！", { time: 3 });
+            }
+        });
+      });
     }
   }
-};
+}
 </script>
 
 <style>
