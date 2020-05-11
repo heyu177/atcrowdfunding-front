@@ -223,6 +223,7 @@ export default {
       for (let index = 0; index < this.checked.length; index++) {
         if (this.checked[index] != false && this.checked[index]!= undefined) {
           checkedIds.push(this.checked[index]);
+        }
       }
       if (checkedIds.length==0) {
         this.$layer.msg("请勾选用户信息的复选框", { time: 3 });
