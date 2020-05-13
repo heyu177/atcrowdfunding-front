@@ -24,7 +24,7 @@
           </b-dropdown>
         </b-button-group>
         <b-button class="m-2" variant="danger">
-          <b-icon icon="question-circle-fill"></b-icon>帮助
+          <b-icon icon="question-circle-fill"></b-icon> 帮助
         </b-button>
       </b-navbar-nav>
     </b-navbar>

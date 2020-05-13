@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 
 const baseUrl="/api";
 
@@ -28,4 +29,5 @@ export const editUser= params => axios.put(`${baseUrl}/user/update`,params);
 export const deleteUser= params => axios.delete(`${baseUrl}/user/delete`,{params});
 
 // 删除多个用户
-export const deleteUsers= params => axios.delete(`${baseUrl}/user/deletes`,{params});
+export const deleteUsers= params => axios.delete(`${baseUrl}/user/deletes`,{params,
+paramsSerializer:params => qs.stringify(params,{indices:false})});

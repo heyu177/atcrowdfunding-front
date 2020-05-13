@@ -14,14 +14,14 @@
           </b-button>
         </b-form>
         <b-button variant="danger" @click="removeUsers" style="float:right">
-          <b-icon icon="x-circle"></b-icon>删除
+          <b-icon icon="x-circle"></b-icon> 删除
         </b-button>
         <b-button
           variant="primary"
           @click="$router.push('/main/user/addOrEdit')"
           style="float:right;margin:0 1rem"
         >
-          <b-icon icon="plus-circle"></b-icon>新增
+          <b-icon icon="plus-circle"></b-icon> 新增
         </b-button>
         <hr class="line" />
         <b-table :fields="fields" :items="items" primary-key="index" striped hover bordered>
@@ -155,7 +155,9 @@ export default {
     getUsersByAccount() {
       const layerid = this.$layer.loading({ content: "正在查询" });
       getUsers({
-        account: this.account
+        account: this.account,
+        pagenum:this.currentPage,
+        pagesize:this.perPage
       }).then(response => {
         this.items = response.data.data;
         this.rows = response.data.total;
@@ -236,8 +238,8 @@ export default {
               this.$layer.msg(`删除${response.data.data}条用户信息`, {
                 time: 3
               });
-              for (let index = 0; index < this.checked.length; index++) {
-                this.newItems.splice(this.checked[index].index-1,1);
+              for (let i = 0; i < this.checked.length; i++) {
+                this.newItems.splice(this.checked[i].index-1,1);
               }
               this.items = this.newItems;
             } else if (response.data.result == "fail") {
