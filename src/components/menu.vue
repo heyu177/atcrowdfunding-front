@@ -2,13 +2,13 @@
   <div class="mt-3">
     <b-card no-body>
       <b-card-header>
-        <b-icon icon="clock-history" variant="primary"></b-icon>
+        <b-icon icon="clock-history" variant="primary"></b-icon>&nbsp;
         <b-link to="/main/control">控制面板</b-link>
       </b-card-header>
     </b-card>
     <b-card no-body>
       <b-card-header v-b-toggle.accordion-1 style="cursor:pointer">
-        <b-icon icon="card-heading" variant="dark"></b-icon>
+        <b-icon icon="card-heading" variant="dark"></b-icon>&nbsp;
         <b-link style="color:#000;text-decoration:none">权限管理</b-link>
         <b-badge style="float:right" pill>3</b-badge>
       </b-card-header>
@@ -30,7 +30,7 @@
     </b-card>
     <b-card no-body>
       <b-card-header v-b-toggle.accordion-2 style="cursor:pointer">
-        <b-icon icon="check" variant="dark"></b-icon>
+        <b-icon icon="check" variant="dark"></b-icon>&nbsp;
         <b-link style="color:#000;text-decoration:none">业务审核</b-link>
         <b-badge style="float:right" pill>3</b-badge>
       </b-card-header>
@@ -52,7 +52,7 @@
     </b-card>
     <b-card no-body>
       <b-card-header v-b-toggle.accordion-3 style="cursor:pointer">
-        <b-icon icon="grid1x2-fill" variant="dark"></b-icon>
+        <b-icon icon="grid1x2-fill" variant="dark"></b-icon>&nbsp;
         <b-link style="color:#000;text-decoration:none">业务管理</b-link>
         <b-badge style="float:right" pill>7</b-badge>
       </b-card-header>
@@ -86,7 +86,7 @@
     </b-card>
     <b-card no-body>
       <b-card-header>
-        <b-icon icon="card-list" variant="primary"></b-icon>
+        <b-icon icon="card-list" variant="primary"></b-icon>&nbsp;
         <b-link>参数管理</b-link>
       </b-card-header>
     </b-card>
