@@ -5,6 +5,7 @@ import Main from "../pages/Main.vue"
 import UserInfo from "../pages/user/UserInfo.vue"
 import Control from "../pages/Control.vue"
 import AddOrEdit from "../pages/user/AddOrEdit.vue"
+import AssignRole from "../pages/user/AssignRole.vue"
 
 Vue.use(VueRouter);
 
@@ -30,6 +31,10 @@ export default new VueRouter({
                 {
                     path:"user/addOrEdit",
                     component:AddOrEdit
+                },
+                {
+                    path:"user/assignRole/:id",
+                    component:AssignRole
                 }
             ]
         }
