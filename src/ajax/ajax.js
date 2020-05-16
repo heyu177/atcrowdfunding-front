@@ -31,3 +31,5 @@ export const deleteUser= params => axios.delete(`${baseUrl}/user/delete`,{params
 // 删除多个用户
 export const deleteUsers= params => axios.delete(`${baseUrl}/user/deletes`,{params,
 paramsSerializer:params => qs.stringify(params,{indices:false})});
+
+export const getRoles= params => axios.get(`${baseUrl}/user/getRoles`,{params});

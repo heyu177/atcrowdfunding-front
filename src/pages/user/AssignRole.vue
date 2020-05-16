@@ -3,7 +3,7 @@
         <b-breadcrumb :items="items" class="m-3"></b-breadcrumb>
         <b-form inline style="border:1px solid #ddd" class="m-3 p-3">
             <b-form-group label="未分配角色列表" label-class="select-label">
-                <b-form-select v-model="selected1" :options="options1" select-size="10" style="width:7rem"></b-form-select>
+                <b-form-select v-model="selected1" :options="options1" select-size="10" style="width:14rem"></b-form-select>
             </b-form-group>
             <b-form-group class="m-4">
                 <b-form-group class="m-4">
@@ -14,7 +14,7 @@
                 </b-form-group>
             </b-form-group>
             <b-form-group label="已分配的角色列表" label-class="select-label">
-                <b-form-select v-model="selected2" :options="options2" select-size="10" style="width:7rem"></b-form-select>
+                <b-form-select v-model="selected2" :options="options2" select-size="10" style="width:14rem"></b-form-select>
             </b-form-group>
         </b-form>
     </div>
@@ -23,6 +23,7 @@
 <script>
 import Vue from "vue"
 import {BreadcrumbPlugin,FormPlugin,ButtonPlugin} from "bootstrap-vue"
+import {getRoles} from "../../ajax/ajax.js"
 
 Vue.use(BreadcrumbPlugin);
 Vue.use(FormPlugin);
@@ -47,37 +48,67 @@ export default {
             ],
             selected1:"",
             selected2:"",
-            options1:[
-                {text:"SE",value:"SE"},
-                {text:"TL",value:"TL"},
-                {text:"GL",value:"GL"},
-                {text:"QA",value:"QA"},
-                {text:"PM",value:"PM"}
-            ],
-            options2:[
-                {text:"QC",value:"QC"},
-                {text:"PG",value:"PG"},
-                {text:"SA",value:"SA"}
-            ]
+            options1:[],
+            options2:[]
         }
     },
     methods:{
         assign(){
+            if (this.selected1==""||this.selected1==null) {
+                this.$layer.msg("请选择需要分配的角色",{time:3});
+                return;
+            }
+            let text1="";
             for (let index = 0; index < this.options1.length; index++) {
-                if (this.options1[index].text==this.selected1) {
+                const option = this.options1[index];
+                if (option.value==this.selected1) {
+                    text1=option.text;
+                    break;
+                }
+            }
+            for (let index = 0; index < this.options1.length; index++) {
+                if (this.options1[index].value==this.selected1) {
                     this.options1.splice(index,1);
                 }
             }
-            this.options2.push({text:this.selected1,value:this.selected1});
+            this.options2.push({text:text1,value:this.selected1});
+            this.selected1="";
         },
         unassign(){
+            if (this.selected2==""||this.selected2==null) {
+                this.$layer.msg("请选择需要取消的角色",{time:3});
+                return;
+            }
+            let text2="";
             for (let index = 0; index < this.options2.length; index++) {
-                if (this.options2[index].text==this.selected2) {
+                const option = this.options2[index];
+                if (option.value==this.selected2) {
+                    text2=option.text;
+                    break;
+                }
+            }
+            for (let index = 0; index < this.options2.length; index++) {
+                if (this.options2[index].value==this.selected2) {
                     this.options2.splice(index,1);
                 }
             }
-            this.options1.push({text:this.selected2,value:this.selected2});
+            this.options1.push({text:text2,value:this.selected2});
+            this.selected2="";
         }
+    },
+    mounted(){
+        let id=this.$route.params.id;
+        getRoles({id}).then(response => {
+            const roles=response.data;
+            for (let index = 0; index < roles.length; index++) {
+                const role = roles[index];
+                if (role.user==null) {
+                    this.options1.push({text:role.name,value:role.id});
+                }else{
+                    this.options2.push({text:role.name,value:role.id});
+                }
+            }
+        });
     }
 }
 </script>
