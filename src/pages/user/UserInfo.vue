@@ -26,7 +26,7 @@
         <hr class="line" />
         <b-table :fields="fields" :items="items" primary-key="index" striped hover bordered>
           <template v-slot:cell(check)="scope">
-            <b-form-checkbox v-model="checked[scope.item.index-1]" :value="scope.item.id"></b-form-checkbox>
+            <b-form-checkbox v-model="checked[scope.item.index-1]" :value="scope.item"></b-form-checkbox>
           </template>
           <template v-slot:head(check)>
             <b-form-checkbox @change="changeHeadCheckbox"></b-form-checkbox>
@@ -224,7 +224,7 @@ export default {
       const checkedIds=[];
       for (let index = 0; index < this.checked.length; index++) {
         if (this.checked[index] != false && this.checked[index]!= undefined) {
-          checkedIds.push(this.checked[index]);
+          checkedIds.push(this.checked[index].id);
         }
       }
       if (checkedIds.length==0) {
@@ -239,7 +239,9 @@ export default {
                 time: 3
               });
               for (let i = 0; i < this.checked.length; i++) {
-                this.newItems.splice(this.checked[i].index-1,1);
+                if (this.checked[i] != false && this.checked[i]!= undefined) {
+                  this.newItems.splice(this.checked[i].index-1,1);
+                }
               }
               this.items = this.newItems;
             } else if (response.data.result == "fail") {
