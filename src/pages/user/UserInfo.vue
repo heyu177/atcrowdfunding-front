@@ -32,7 +32,7 @@
             <b-form-checkbox @change="changeHeadCheckbox"></b-form-checkbox>
           </template>
           <template v-slot:cell(action)="scope">
-            <b-button variant="success" class="mr-1" size="sm" @click="$router.push(`/main/user/assignRole/${scope.item.id}`)">
+            <b-button variant="success" class="mr-1" size="sm">
               <b-icon icon="check-box"></b-icon>
             </b-button>
             <b-button variant="primary" @click="editUser(scope.item)" class="mr-1" size="sm">
