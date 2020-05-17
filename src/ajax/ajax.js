@@ -32,4 +32,11 @@ export const deleteUser= params => axios.delete(`${baseUrl}/user/delete`,{params
 export const deleteUsers= params => axios.delete(`${baseUrl}/user/deletes`,{params,
 paramsSerializer:params => qs.stringify(params,{indices:false})});
 
+// 获取角色列表
 export const getRoles= params => axios.get(`${baseUrl}/user/getRoles`,{params});
+
+// 分配角色
+export const assignRole= params => axios.post(`${baseUrl}/user/doAssign`,params);
+
+// 解除分配的角色
+export const unAssignRole= params => axios.delete(`${baseUrl}/user/doUnAssign`,{params});

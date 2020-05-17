@@ -22,7 +22,7 @@
               <b-icon icon="person-bounding-box"></b-icon>角色维护
             </b-nav-item>
             <b-nav-item class="nav-item-bg">
-              <b-icon icon="lock-fill"></b-icon>权限维护
+              <b-icon icon="lock-fill"></b-icon>许可维护
             </b-nav-item>
           </b-nav>
         </b-card-body>
