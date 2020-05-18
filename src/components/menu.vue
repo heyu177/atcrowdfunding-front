@@ -21,7 +21,7 @@
             <b-nav-item class="nav-item-bg">
               <b-icon icon="person-bounding-box"></b-icon>角色维护
             </b-nav-item>
-            <b-nav-item class="nav-item-bg">
+            <b-nav-item class="nav-item-bg" to="/main/permission">
               <b-icon icon="lock-fill"></b-icon>许可维护
             </b-nav-item>
           </b-nav>

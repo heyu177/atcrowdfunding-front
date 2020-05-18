@@ -6,6 +6,7 @@ import UserInfo from "../pages/user/UserInfo.vue"
 import Control from "../pages/Control.vue"
 import AddOrEdit from "../pages/user/AddOrEdit.vue"
 import AssignRole from "../pages/user/AssignRole.vue"
+import PermissionInfo from "../pages/permission/PermissionInfo.vue"
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,10 @@ export default new VueRouter({
                 {
                     path:"user/assignRole/:id",
                     component:AssignRole
+                },
+                {
+                    path:"permission",
+                    component:PermissionInfo
                 }
             ]
         }
