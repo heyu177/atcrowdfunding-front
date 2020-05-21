@@ -5,26 +5,15 @@
 </template>
 
 <script>
+import {async} from "../../ajax/ajax.js"
 export default {
   data() {
     return {
-      setting:{},
-      zNodes: [
-        {
-          name: "test1",
-          open: true,
-          children: [{ name: "test1_1" }, { name: "test1_2" }]
-        },
-        {
-          name: "test2",
-          open: true,
-          children: [{ name: "test2_1" }, { name: "test2_2" }]
-        }
-      ]
+      setting:{async}
     };
   },
   mounted(){
-      $.fn.zTree.init($("#treeDemo"), this.setting, this.zNodes);
+      $.fn.zTree.init($("#treeDemo"), this.setting);
   }
 };
 </script>

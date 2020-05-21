@@ -40,3 +40,8 @@ export const assignRole= params => axios.post(`${baseUrl}/user/doAssign`,params)
 
 // 解除分配的角色
 export const unAssignRole= params => axios.delete(`${baseUrl}/user/doUnAssign`,{params});
+
+export const async={
+    enable:true,
+    url:`${baseUrl}/permission/loadData`
+}
