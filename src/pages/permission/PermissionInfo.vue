@@ -21,7 +21,56 @@ Vue.use(CardPlugin);
 export default {
   data() {
     return {
-      setting: { async }
+      setting: {
+        async,
+        view: {
+          selectedMulti: false,
+          addDiyDom: function(treeId, treeNode) {
+            var icoObj = $("#" + treeNode.tId + "_ico"); // tId = permissionTree_1, $("#permissionTree_1_ico")
+            if (treeNode.icon) {
+              icoObj
+                .removeClass("button ico_docu ico_open")
+                .addClass("fa fa-fw " + treeNode.icon)
+                .css("background", "");
+            }
+          },
+          addHoverDom: function(treeId, treeNode) {
+            //   <a><span></span></a>
+            var aObj = $("#" + treeNode.tId + "_a"); // tId = permissionTree_1, ==> $("#permissionTree_1_a")
+            aObj.attr("href", "javascript:;");
+            if (
+              treeNode.editNameFlag ||
+              $("#btnGroup" + treeNode.tId).length > 0
+            )
+              return;
+            var s = '<span id="btnGroup' + treeNode.tId + '">';
+            if (treeNode.level == 0) {
+              s +=
+                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
+            } else if (treeNode.level == 1) {
+              s +=
+                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
+              if (treeNode.children.length == 0) {
+                s +=
+                  '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+              }
+              s +=
+                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
+            } else if (treeNode.level == 2) {
+              s +=
+                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
+              s +=
+                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+            }
+
+            s += "</span>";
+            aObj.after(s);
+          },
+          removeHoverDom: function(treeId, treeNode) {
+            $("#btnGroup" + treeNode.tId).remove();
+          }
+        }
+      }
     };
   },
   mounted() {
