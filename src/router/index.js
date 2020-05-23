@@ -7,7 +7,7 @@ import Control from "../pages/Control.vue"
 import AddOrEdit from "../pages/user/AddOrEdit.vue"
 import AssignRole from "../pages/user/AssignRole.vue"
 import PermissionInfo from "../pages/permission/permissionInfo/PermissionInfo.vue"
-import AddPermission from "../pages/permission/AddPermission.vue"
+import AddOrEditPermission from "../pages/permission/AddOrEditPermission.vue"
 
 Vue.use(VueRouter);
 
@@ -44,7 +44,7 @@ export default new VueRouter({
                 },
                 {
                     path:"permission/add:id",
-                    component:AddPermission
+                    component:AddOrEditPermission
                 }
             ]
         }

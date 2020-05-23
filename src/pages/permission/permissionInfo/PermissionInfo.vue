@@ -21,6 +21,7 @@ Vue.use(CardPlugin);
 export default {
   data() {
     return {
+      treeNode: {},
       setting: {
         async,
         view: {
@@ -34,8 +35,9 @@ export default {
                 .css("background", "");
             }
           },
-          addHoverDom: function(treeId, treeNode) {
+          addHoverDom:(treeId, treeNode) => {
             //   <a><span></span></a>
+            this.treeNode = treeNode;
             var aObj = $("#" + treeNode.tId + "_a"); // tId = permissionTree_1, ==> $("#permissionTree_1_a")
             aObj.attr("href", "javascript:;");
             if (
@@ -46,27 +48,35 @@ export default {
             var s = '<span id="btnGroup' + treeNode.tId + '">';
             if (treeNode.level == 0) {
               s +=
-                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" onclick="addNode(' +
-                treeNode.id +
-                ')">&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
+                '<a class="btn btn-info dropdown-toggle btn-xs add" style="margin-left:10px;padding-top:0px;" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
             } else if (treeNode.level == 1) {
               s +=
-                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
+                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
               if (treeNode.children == null) {
                 s +=
-                  '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+                  '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
               }
               s +=
-                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
+                '<a class="btn btn-info dropdown-toggle btn-xs add" style="margin-left:10px;padding-top:0px;" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
             } else if (treeNode.level == 2) {
               s +=
-                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  href="#" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
+                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
               s +=
-                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
             }
 
             s += "</span>";
-            aObj.after(s);
+            aObj.append(s);
+            let addNodes = document.querySelectorAll("a.add");
+            for (let index = 0; index < addNodes.length; index++) {
+              addNodes[index].onclick = event => {
+                event.preventDefault();
+                this.$router.push({
+                  path: "/main/permission/add",
+                  params: { id:this.treeNode.id }
+                });
+              };
+            }
           },
           removeHoverDom: function(treeId, treeNode) {
             $("#btnGroup" + treeNode.tId).remove();
@@ -77,11 +87,6 @@ export default {
   },
   mounted() {
     $.fn.zTree.init($("#treeDemo"), this.setting);
-  },
-  methods:{
-    addNode(id){
-      this.$router.push({path:"/main/permission/add",params:{id}});
-    }
   }
 };
 </script>
