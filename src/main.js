@@ -9,6 +9,7 @@ import layer from 'vue-layer'
 import 'vue-layer/lib/vue-layer.css'
 import "ztree/jquery-1.4.4.min.js"
 import "ztree/jquery.ztree.core.min.js"
+import "ztree/jquery.ztree.exedit.min.js"
 import "ztree/zTreeStyle.css"
 
 Vue.config.productionTip = false
