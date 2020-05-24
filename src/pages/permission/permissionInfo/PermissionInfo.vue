@@ -71,10 +71,7 @@ export default {
             for (let index = 0; index < addNodes.length; index++) {
               addNodes[index].onclick = event => {
                 event.preventDefault();
-                this.$router.push({
-                  path: "/main/permission/add",
-                  params: { id:this.treeNode.id }
-                });
+                this.$router.push(`/main/permission/add/${this.treeNode.id}`);
               };
             }
           },
