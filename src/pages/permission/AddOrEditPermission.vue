@@ -37,7 +37,7 @@
 
 <script>
 import Vue from "vue";
-import {  } from "../../ajax/ajax.js";
+import { addPermission,editPermission } from "../../ajax/ajax.js";
 import {
   BadgePlugin,
   CardPlugin,
@@ -56,7 +56,7 @@ export default {
       id: 0,
       name: "",
       url: "",
-      oddUser:{},
+      oddPermission:{},
       items: [
         {
           text: "首页",
@@ -75,6 +75,69 @@ export default {
       icon: ""
     };
   },
+  methods: {
+    addOrEdit() {
+      if (this.oddPermission) {
+        // 新增许可
+        const layerid = this.$layer.loading({ content: "正在添加" });
+        addPermission({
+          pid:this.id,
+          name: this.name,
+          url: this.url,
+        }).then(response => {
+          this.$layer.close(layerid);
+          if (response.data == "success") {
+            this.$layer.msg("新增成功", { time: 3 });
+            this.$router.push("/main/permission");
+          } else if(response.data=="fail") {
+            this.$layer.msg("新增失败！", { time: 3 });
+          }
+        });
+      } else {
+        // 修改用户
+        const layerid = this.$layer.loading({ content: "正在修改" });
+        editPermission({
+          id:this.id,
+          name: this.name,
+          url: this.url,
+        }).then(response => {
+          this.$layer.close(layerid);
+          if (response.data == "success") {
+            this.$layer.msg("修改成功", { time: 3 });
+            this.$router.push("/main/permission");
+          } else if(response.data=="fail") {
+            this.$layer.msg("修改失败！", { time: 3 });
+          }
+        });
+      }
+    },
+    reset(){
+      if (this.id!=0) {
+        // 文本框恢复原来的数据
+        this.name=this.oddPermission.name;
+        this.url=this.oddPermission.url;
+      }else if (this.id==0) {
+        // 文本框置空
+        this.$refs.form.reset();
+      }
+    }
+  },
+  mounted() {
+    let id = this.$route.params.id;
+    let permission=this.$route.query;
+    if (permission.id) {
+      this.oddPermission=permission;
+      this.id = permission.id;
+      this.name = permission.name;
+      this.username = permission.username;
+      this.submitText = "修改";
+      this.icon = "brush";
+    } else if (id) {
+      this.id=id;
+      this.submitText = "新增";
+      this.icon = "plus";
+    }
+  }
 }
 </script>
 

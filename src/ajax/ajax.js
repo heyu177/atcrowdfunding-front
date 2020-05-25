@@ -41,7 +41,14 @@ export const assignRole= params => axios.post(`${baseUrl}/user/doAssign`,params)
 // 解除分配的角色
 export const unAssignRole= params => axios.delete(`${baseUrl}/user/doUnAssign`,{params});
 
+// 获取许可信息
 export const async={
     enable:true,
     url:`${baseUrl}/permission/loadData`
 }
+
+// 添加许可信息
+export const addPermission= params => axios.post(`${baseUrl}/permission/insert`,params);
+
+// 修改许可信息
+export const editPermission= params => axios.put(`${baseUrl}/permission/update`,params);
