@@ -123,17 +123,16 @@ export default {
     }
   },
   mounted() {
-    let id = this.$route.params.id;
     let permission=this.$route.query;
-    if (permission.id) {
+    if (permission.name) {
       this.oddPermission=permission;
       this.id = permission.id;
       this.name = permission.name;
       this.username = permission.username;
       this.submitText = "修改";
       this.icon = "brush";
-    } else if (id) {
-      this.id=id;
+    } else {
+      this.id=permission.id;
       this.submitText = "新增";
       this.icon = "plus";
     }

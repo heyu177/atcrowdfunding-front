@@ -37,7 +37,6 @@ export default {
           },
           addHoverDom:(treeId, treeNode) => {
             //   <a><span></span></a>
-            this.treeNode = treeNode;
             var aObj = $("#" + treeNode.tId + "_a"); // tId = permissionTree_1, ==> $("#permissionTree_1_a")
             aObj.attr("href", "javascript:;");
             if (
@@ -71,7 +70,7 @@ export default {
             for (let index = 0; index < addNodes.length; index++) {
               addNodes[index].onclick = event => {
                 event.preventDefault();
-                this.$router.push(`/main/permission/add/${this.treeNode.id}`);
+                this.$router.push({path:"/main/permission/add",query:{id:treeNode.id}});
               };
             }
           },

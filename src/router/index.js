@@ -43,7 +43,7 @@ export default new VueRouter({
                     component:PermissionInfo
                 },
                 {
-                    path:"permission/add/:id",
+                    path:"permission/add",
                     component:AddOrEditPermission
                 }
             ]
