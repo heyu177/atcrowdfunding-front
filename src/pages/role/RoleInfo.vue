@@ -36,7 +36,7 @@
               variant="success"
               class="mr-1"
               size="sm"
-              @click="$router.push(`/main/user/assignRole/${scope.item.id}`)"
+              @click="$router.push(`/main/role/assignPermission/${scope.item.id}`)"
             >
               <b-icon icon="check-box"></b-icon>
             </b-button>
