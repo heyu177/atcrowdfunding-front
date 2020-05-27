@@ -13,7 +13,7 @@
 
 <script>
 import Vue from "vue";
-import { async } from "../../../ajax/ajax.js";
+import { async,deletePermission } from "../../../ajax/ajax.js";
 import { CardPlugin } from "bootstrap-vue";
 
 Vue.use(CardPlugin);
@@ -21,7 +21,6 @@ Vue.use(CardPlugin);
 export default {
   data() {
     return {
-      treeNode: {},
       setting: {
         async,
         view: {
@@ -50,28 +49,57 @@ export default {
                 '<a class="btn btn-info dropdown-toggle btn-xs add" style="margin-left:10px;padding-top:0px;" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
             } else if (treeNode.level == 1) {
               s +=
-                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
+                '<a class="btn btn-info dropdown-toggle btn-xs edit" style="margin-left:10px;padding-top:0px;" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
               if (treeNode.children == null) {
                 s +=
-                  '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+                  '<a class="btn btn-info dropdown-toggle btn-xs delete" style="margin-left:10px;padding-top:0px;" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
               }
               s +=
                 '<a class="btn btn-info dropdown-toggle btn-xs add" style="margin-left:10px;padding-top:0px;" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
             } else if (treeNode.level == 2) {
               s +=
-                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
+                '<a class="btn btn-info dropdown-toggle btn-xs edit" style="margin-left:10px;padding-top:0px;" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
               s +=
-                '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+                '<a class="btn btn-info dropdown-toggle btn-xs delete" style="margin-left:10px;padding-top:0px;">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
             }
 
             s += "</span>";
             aObj.append(s);
             let addNodes = document.querySelectorAll("a.add");
+            let editNodes=document.querySelectorAll("a.edit");
+            let deleteNodes=document.querySelectorAll("a.delete");
             for (let index = 0; index < addNodes.length; index++) {
               addNodes[index].onclick = event => {
                 event.preventDefault();
-                this.$router.push({path:"/main/permission/add",query:{id:treeNode.id}});
+                this.$router.push({path:"/main/permission/addOrEdit",query:{id:treeNode.id}});
               };
+            }
+            for (let index = 0; index < editNodes.length; index++) {
+              editNodes[index].onclick= event => {
+                event.preventDefault();
+                this.$router.push({path:"/main/permission/addOrEdit",query:{
+                  id:treeNode.id,
+                  name:treeNode.name,
+                  url:treeNode.url
+                }});
+              }
+            }
+            for (let index = 0; index < deleteNodes.length; index++) {
+              deleteNodes[index].onclick= event => {
+                event.preventDefault();
+                this.$layer.confirm(`确实要删除${treeNode.name}吗？`,layerid => {
+                  this.$layer.close(layerid);
+                  deletePermission({id:treeNode.id}).then(response => {
+                    if (response.data=="success") {
+                      this.$layer.msg("删除成功！",{time:3});
+                      const treeObj=$.fn.zTree.getZTreeObj("treeDemo");
+                      treeObj.reAsyncChildNodes(null,"refresh");
+                    }else if (response.data=="fail") {
+                      this.$layer.msg("删除失败！",{time:3});
+                    }
+                  })
+                });
+              }
             }
           },
           removeHoverDom: function(treeId, treeNode) {

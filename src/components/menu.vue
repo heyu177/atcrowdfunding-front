@@ -18,7 +18,7 @@
             <b-nav-item to="/main/user" class="nav-item-bg">
               <b-icon icon="person-fill"></b-icon>用户维护
             </b-nav-item>
-            <b-nav-item class="nav-item-bg">
+            <b-nav-item class="nav-item-bg" to="/main/role">
               <b-icon icon="person-bounding-box"></b-icon>角色维护
             </b-nav-item>
             <b-nav-item class="nav-item-bg" to="/main/permission">

@@ -52,3 +52,9 @@ export const addPermission= params => axios.post(`${baseUrl}/permission/insert`,
 
 // 修改许可信息
 export const editPermission= params => axios.put(`${baseUrl}/permission/update`,params);
+
+// 删除许可信息
+export const deletePermission= params =>axios.delete(`${baseUrl}/permission/delete`,{params});
+
+// 分页查询角色信息
+export const getRolesByPages= params => axios.get(`${baseUrl}/role/index`,{params});

@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     addOrEdit() {
-      if (this.oddPermission) {
+      if (this.submitText=="新增") {
         // 新增许可
         const layerid = this.$layer.loading({ content: "正在添加" });
         addPermission({
@@ -93,7 +93,7 @@ export default {
             this.$layer.msg("新增失败！", { time: 3 });
           }
         });
-      } else {
+      } else if (this.submitText=="修改") {
         // 修改用户
         const layerid = this.$layer.loading({ content: "正在修改" });
         editPermission({
@@ -128,7 +128,7 @@ export default {
       this.oddPermission=permission;
       this.id = permission.id;
       this.name = permission.name;
-      this.username = permission.username;
+      this.url = permission.url;
       this.submitText = "修改";
       this.icon = "brush";
     } else {
