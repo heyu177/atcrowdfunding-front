@@ -18,7 +18,7 @@
 <script>
 import Vue from "vue";
 import { CardPlugin, BreadcrumbPlugin,ButtonPlugin } from "bootstrap-vue";
-import { async } from "../../ajax/ajax.js";
+import { asyncUrl,assignPermission } from "../../ajax/ajax.js";
 
 Vue.use(CardPlugin);
 Vue.use(BreadcrumbPlugin);
@@ -42,7 +42,11 @@ export default {
         }
       ],
       setting:{
-        async,
+        async:{
+          enable:true,
+          url:asyncUrl,
+          otherParam:["roleId",this.$route.params.id]
+        },
         check:{
           enable:true
         }
@@ -58,6 +62,21 @@ export default {
       var nodes = treeObj.getCheckedNodes(true);
       if (nodes.length==0) {
         this.$layer.msg("请选择需要分配的许可信息",{time:3});
+      }else{
+        const permissionIds=[];
+        for (let index = 0; index < nodes.length; index++) {
+          permissionIds[index]=nodes[index].id;
+        }
+        assignPermission({
+          roleId:this.$route.params.id,
+          permissionIds
+        }).then(response => {
+          if (response.data=="success") {
+            this.$layer.msg("分配成功！",{time:3});
+          }else if (response.data=="fail") {
+            this.$layer.msg("分配失败！",{time:3});
+          }
+        });
       }
     }
   }

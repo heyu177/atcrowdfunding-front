@@ -58,3 +58,9 @@ export const deletePermission= params =>axios.delete(`${baseUrl}/permission/dele
 
 // 分页查询角色信息
 export const getRolesByPages= params => axios.get(`${baseUrl}/role/index`,{params});
+
+// 分配许可信息
+export const assignPermission= params => axios.post(`${baseUrl}/role/doAssign`,params);
+
+// 获取已分配许可信息的访问路径
+export const asyncUrl=`${baseUrl}/permission/loadAssignData`;
