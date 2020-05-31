@@ -33,19 +33,22 @@
       </b-collapse>
     </b-navbar>
     <b-container fluid style="height:100%">
-      <b-sidebar
-        shadow
-        no-header-close
-        no-close-on-esc
-        v-model="visible"
-        id="navLeft"
-        style="background:#f5f5f5;position:fixed;left:0;z-index:1;overflow:auto"
-      >
-        <Menu />
-      </b-sidebar>
-      <b-container style="z-index:0;position:absolute" id="table">
-        <router-view></router-view>
-      </b-container>
+      <b-row style="height:100%">
+        <b-col
+          id="navLeft"
+          sm="3"
+          md="2"
+          style="background:#f5f5f5;position:fixed;left:0;z-index:1;overflow:auto"
+        >
+          <b-sidebar id="sidebar" shadow v-model="visible" :width="sidebarWidth" :no-close-on-route-change="!isMobile">
+            <Menu :isMobile="isMobile"/>
+          </b-sidebar>
+        </b-col>
+        <b-col sm="9" md="10" style="z-index:0;position:absolute" id="table">
+          <b-button v-if="isMobile" v-b-toggle.sidebar class="ml-3 mt-1"><b-icon icon="backspace"></b-icon> 返回</b-button>
+          <router-view></router-view>
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -80,7 +83,9 @@ export default {
   data() {
     return {
       username: "",
-      visible: true
+      visible:true,
+      sidebarWidth:"16.666667%",
+      isMobile:false
     };
   },
   components: {
@@ -96,13 +101,19 @@ export default {
     }
   },
   mounted() {
+    const screenWidth=document.documentElement.clientWidth;
     const navLeft = document.querySelector("#navLeft");
-    const navTop = document.querySelector("#navTop");
-    navLeft.style.top = navTop.clientHeight + "px";
     const table = document.querySelector("#table");
-    table.style.left = navLeft.clientWidth + "px";
-    table.style.top = navTop.clientHeight + "px";
-
+    if (screenWidth>=992) {
+      this.sidebarWidth="16.666667%";
+      table.style.left = navLeft.clientWidth + "px";
+    } else{
+      this.sidebarWidth="100%";
+      this.isMobile=true
+    }
+    // const navTop = document.querySelector("#navTop");
+    navLeft.style.top = "53.2px";
+    table.style.top = "53.2px";
     getUsername().then(response => {
       if (response.data.result == "success") {
         this.username = response.data.username;

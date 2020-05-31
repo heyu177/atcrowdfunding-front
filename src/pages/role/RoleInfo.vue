@@ -5,13 +5,17 @@
         <b-icon icon="grid3x3-gap"></b-icon>数据列表
       </b-card-header>
       <b-card-body>
-        <b-form inline style="float:left" @submit.prevent="getRolesByName">
-          <b-input-group prepend="查询条件">
-            <b-form-input placeholder="请输入许可名称" class="mr-1" v-model="name"></b-form-input>
-          </b-input-group>
-          <b-button type="submit" style="background:#f0ad4e">
-            <b-icon icon="search"></b-icon>查询
-          </b-button>
+        <b-form inline style="float:left" @submit.prevent="getUsersByAccount">
+          <b-form-group>
+            <b-input-group prepend="查询条件">
+              <b-form-input placeholder="请输入账号" class="mr-1" v-model="account"></b-form-input>
+            </b-input-group>
+          </b-form-group>
+          <b-form-group>
+            <b-button type="submit" style="background:#f0ad4e">
+              <b-icon icon="search"></b-icon>查询
+            </b-button>
+          </b-form-group>
         </b-form>
         <b-button variant="danger" @click="removeUsers" style="float:right">
           <b-icon icon="x-circle"></b-icon>删除
@@ -24,7 +28,7 @@
           <b-icon icon="plus-circle"></b-icon>新增
         </b-button>
         <hr class="line" />
-        <b-table :fields="fields" :items="items" primary-key="index" striped hover bordered>
+        <b-table :fields="fields" :items="items" primary-key="index" striped hover bordered responsive>
           <template v-slot:cell(check)="scope">
             <b-form-checkbox v-model="checked[scope.item.index-1]" :value="scope.item"></b-form-checkbox>
           </template>
@@ -109,11 +113,13 @@ export default {
         {
           key: "name",
           label: "名称",
-          tdClass: "nameStyle"
+          tdClass: "nameStyle",
+          class:"td_th"
         },
         {
           key: "action",
-          label: "操作"
+          label: "操作",
+          class:"td_th"
         }
       ],
       items: [],
@@ -253,4 +259,10 @@ export default {
 </script>
 
 <style>
+.td_th{
+  white-space: nowrap;
+}
+.nameStyle{
+  color: #e43400;
+}
 </style>
