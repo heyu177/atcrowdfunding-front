@@ -15,13 +15,22 @@
       <b-collapse id="accordion-1">
         <b-card-body>
           <b-nav vertical style="font-size:0.8rem">
-            <b-nav-item to="/main/user" class="nav-item-bg">
+            <b-nav-item v-if="isMobile" to="/main/user" class="nav-item-bg" v-b-toggle.sidebar>
               <b-icon icon="person-fill"></b-icon>用户维护
             </b-nav-item>
-            <b-nav-item class="nav-item-bg" to="/main/role">
+            <b-nav-item v-else to="/main/user" class="nav-item-bg">
+              <b-icon icon="person-fill"></b-icon>用户维护
+            </b-nav-item>
+            <b-nav-item v-if="isMobile" class="nav-item-bg" to="/main/role" v-b-toggle.sidebar>
               <b-icon icon="person-bounding-box"></b-icon>角色维护
             </b-nav-item>
-            <b-nav-item class="nav-item-bg" to="/main/permission">
+            <b-nav-item v-else class="nav-item-bg" to="/main/role">
+              <b-icon icon="person-bounding-box"></b-icon>角色维护
+            </b-nav-item>
+            <b-nav-item v-if="isMobile" class="nav-item-bg" to="/main/permission" v-b-toggle.sidebar>
+              <b-icon icon="lock-fill"></b-icon>许可维护
+            </b-nav-item>
+            <b-nav-item v-else class="nav-item-bg" to="/main/permission">
               <b-icon icon="lock-fill"></b-icon>许可维护
             </b-nav-item>
           </b-nav>
@@ -110,6 +119,7 @@ Vue.use(BadgePlugin);
 Vue.use(NavPlugin);
 
 export default {
+  props:["isMobile"],
   mounted() {
     const itemNodes = document.querySelectorAll(".nav-item-bg");
     for (let index = 0; index < itemNodes.length; index++) {

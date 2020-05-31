@@ -24,7 +24,7 @@
           <b-icon icon="plus-circle"></b-icon>新增
         </b-button>
         <hr class="line" />
-        <b-table :fields="fields" :items="items" primary-key="index" striped hover bordered>
+        <b-table :fields="fields" :items="items" primary-key="index" striped hover bordered responsive>
           <template v-slot:cell(check)="scope">
             <b-form-checkbox v-model="checked[scope.item.index-1]" :value="scope.item"></b-form-checkbox>
           </template>
@@ -109,11 +109,13 @@ export default {
         {
           key: "name",
           label: "名称",
-          tdClass: "nameStyle"
+          tdClass: "nameStyle",
+          class:"td_th"
         },
         {
           key: "action",
-          label: "操作"
+          label: "操作",
+          class:"td_th"
         }
       ],
       items: [],
@@ -253,4 +255,10 @@ export default {
 </script>
 
 <style>
+.td_th{
+  white-space: nowrap;
+}
+.nameStyle{
+  color: #e43400;
+}
 </style>
