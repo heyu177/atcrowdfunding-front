@@ -33,19 +33,19 @@
       </b-collapse>
     </b-navbar>
     <b-container fluid style="height:100%">
-      <b-row style="height:100%">
-        <b-col
-          id="navLeft"
-          sm="3"
-          md="2"
-          style="height:100%;background:#f5f5f5;position:fixed;left:0;bottom:0;z-index:1;overflow:auto"
-        >
-          <Menu />
-        </b-col>
-        <b-col sm="9" md="10" style="z-index:0;position:absolute" id="table">
-          <router-view></router-view>
-        </b-col>
-      </b-row>
+      <b-sidebar
+        shadow
+        no-header-close
+        no-close-on-esc
+        v-model="visible"
+        id="navLeft"
+        style="background:#f5f5f5;position:fixed;left:0;z-index:1;overflow:auto"
+      >
+        <Menu />
+      </b-sidebar>
+      <b-container style="z-index:0;position:absolute" id="table">
+        <router-view></router-view>
+      </b-container>
     </b-container>
   </div>
 </template>
@@ -62,7 +62,8 @@ import {
   ButtonGroupPlugin,
   LayoutPlugin,
   ImagePlugin,
-  CollapsePlugin
+  CollapsePlugin,
+  SidebarPlugin
 } from "bootstrap-vue";
 
 Vue.use(NavPlugin);
@@ -73,11 +74,13 @@ Vue.use(ButtonGroupPlugin);
 Vue.use(LayoutPlugin);
 Vue.use(ImagePlugin);
 Vue.use(CollapsePlugin);
+Vue.use(SidebarPlugin);
 
 export default {
   data() {
     return {
-      username: ""
+      username: "",
+      visible: true
     };
   },
   components: {
