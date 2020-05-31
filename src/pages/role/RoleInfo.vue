@@ -5,13 +5,17 @@
         <b-icon icon="grid3x3-gap"></b-icon>数据列表
       </b-card-header>
       <b-card-body>
-        <b-form inline style="float:left" @submit.prevent="getRolesByName">
-          <b-input-group prepend="查询条件">
-            <b-form-input placeholder="请输入许可名称" class="mr-1" v-model="name"></b-form-input>
-          </b-input-group>
-          <b-button type="submit" style="background:#f0ad4e">
-            <b-icon icon="search"></b-icon>查询
-          </b-button>
+        <b-form inline style="float:left" @submit.prevent="getUsersByAccount">
+          <b-form-group>
+            <b-input-group prepend="查询条件">
+              <b-form-input placeholder="请输入账号" class="mr-1" v-model="account"></b-form-input>
+            </b-input-group>
+          </b-form-group>
+          <b-form-group>
+            <b-button type="submit" style="background:#f0ad4e">
+              <b-icon icon="search"></b-icon>查询
+            </b-button>
+          </b-form-group>
         </b-form>
         <b-button variant="danger" @click="removeUsers" style="float:right">
           <b-icon icon="x-circle"></b-icon>删除

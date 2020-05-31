@@ -41,7 +41,7 @@
           style="background:#f5f5f5;position:fixed;left:0;z-index:1;overflow:auto"
         >
           <b-sidebar id="sidebar" shadow v-model="visible" :width="sidebarWidth" :no-close-on-route-change="!isMobile">
-            <Menu :isMobile="isMobile"/>
+            <Menu/>
           </b-sidebar>
         </b-col>
         <b-col sm="9" md="10" style="z-index:0;position:absolute" id="table">
